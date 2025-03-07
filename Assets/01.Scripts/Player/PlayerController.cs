@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action<PlayerController> OnFixedUpdate;
+
     [Header("Movement")]
     private float moveSpeed = 2f;
     public float jumpPower = 100f;
@@ -19,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta; 
     public bool canLook = true;
 
-    private Rigidbody _rigidbody;
+    [HideInInspector] public Vector3 forcedVelocity;
+    [HideInInspector] public Rigidbody _rigidbody;
 
     private void Awake()
     {
@@ -33,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        //함수가 등록되어있다면 Invoke
+        OnFixedUpdate?.Invoke(this);
     }
     private void LateUpdate()
     {
@@ -41,15 +47,14 @@ public class PlayerController : MonoBehaviour
             CameraLook();
         }
     }
-
     void Move()
     {
         Vector3 dir = transform.forward * inputDir.y + transform.right * inputDir.x;
         dir *= moveSpeed;
+        dir += forcedVelocity;
         dir.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = dir;
-
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -83,7 +88,7 @@ public class PlayerController : MonoBehaviour
             _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
         }
     }
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
         {
@@ -97,7 +102,6 @@ public class PlayerController : MonoBehaviour
         {
             if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
             {
-                Debug.Log("ISGround");
                 return true;
             }
         }

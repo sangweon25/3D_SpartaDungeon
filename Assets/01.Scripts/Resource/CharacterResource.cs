@@ -8,6 +8,8 @@ public enum EResourceType
 
 public class CharacterResource : MonoBehaviour
 {
+    public EResourceType ResourceType;
+
     [Header("ResourceVal")]
     [Range(1f, 100f)]
     public float startVal = 100f;
@@ -17,7 +19,7 @@ public class CharacterResource : MonoBehaviour
 
     [Header("ResourceBar")]
     public Image uiBar;
-    public EResourceType ResourceType{ get;}   
+
 
     private void Start()
     {
