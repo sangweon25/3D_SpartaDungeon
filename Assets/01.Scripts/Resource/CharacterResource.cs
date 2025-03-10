@@ -36,12 +36,12 @@ public class CharacterResource : MonoBehaviour
 
     public void Increase(float amount)
     {
-        curVal = Mathf.Max(curVal + amount,maxVal);
+        curVal = Mathf.Min(curVal + amount,maxVal);
     }
 
     public void Decrease(float amount)
     {
-        curVal = Mathf.Min(curVal -amount, 0);
+        curVal = Mathf.Max(curVal -amount, 0);
     }
 
 

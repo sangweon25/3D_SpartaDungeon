@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public event Action<PlayerController> OnFixedUpdate;
 
     [Header("Movement")]
-    private float moveSpeed = 2f;
+    private float moveSpeed = 5f;
     public float jumpPower = 100f;
     private Vector2 inputDir;
     public LayerMask groundLayerMask; 
@@ -107,4 +108,16 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
+
+    public void BoostSpeed(float value,float time)
+    {
+        StartCoroutine(Boost(value,time));
+    }
+    public IEnumerator Boost(float value,float time)
+    {
+        moveSpeed = value;
+        yield return new WaitForSeconds(time);
+        moveSpeed = 5f;
+    }
+
 }
