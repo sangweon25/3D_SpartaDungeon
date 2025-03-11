@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private float camCurXRot;
     public float lookSensitivity; 
     private Vector2 mouseDelta; 
+    public Vector2 MouseDelta {  get { return mouseDelta; } }
     public bool canLook = true;
 
     [HideInInspector] public Vector3 forcedVelocity;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         if(canLook)
         {
-            CameraLook();
+            //CameraLook();
         }
     }
     void Move()
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
             inputDir = Vector2.zero;
         }
     }
+
     void CameraLook()
     {
         camCurXRot += mouseDelta.y * lookSensitivity;
