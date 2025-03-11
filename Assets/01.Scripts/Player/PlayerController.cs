@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 5f;
     public float jumpPower = 100f;
     private Vector2 inputDir;
-    public LayerMask groundLayerMask; 
+    public LayerMask groundLayerMask;
+    public float jumpStamina = 20f;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -86,7 +87,11 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started&& IsGrounded())
         {
-            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            if(CharacterManager.Instance.Player.resource.Stamina.CurVal > jumpStamina)
+            {
+                _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+                CharacterManager.Instance.Player.resource.St_Decrease(jumpStamina);
+            }
         }
     }
     public bool IsGrounded()

@@ -2025,7 +2025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourceType: 0
-  startVal: 100
+  startVal: 200
   maxVal: 200
   curVal: 0
   uiBar: {fileID: 0}

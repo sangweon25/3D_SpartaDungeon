@@ -11,11 +11,12 @@ public class CharacterResource : MonoBehaviour
     public EResourceType ResourceType;
 
     [Header("ResourceVal")]
-    [Range(1f, 100f)]
+    [Range(1f, 200f)]
     public float startVal = 100f;
     [Range(1f,200f)]
     public float maxVal = 100f;
     [SerializeField] private float curVal;
+    public float CurVal { get { return curVal; } }
 
     [Header("ResourceBar")]
     public Image uiBar;
